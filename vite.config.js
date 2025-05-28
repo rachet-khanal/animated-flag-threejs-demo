@@ -12,7 +12,9 @@ export default {
     outDir: "../dist", // Output in the dist/ folder
     emptyOutDir: true, // Empty the folder first
     sourcemap: true, // Add sourcemap
+    target: "esnext",
   },
+  base: "animated-flag-threejs-demo",
   plugins: [
     restart({ restart: ["../static/**"] }), // Restart server on static file change
     glsl(), // initiate glsl plugin
