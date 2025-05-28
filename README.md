@@ -8,7 +8,7 @@ This is a visual demo project built with **Three.js** and **GLSL shaders**, show
 
 ## 🌐 Live Demo
 
-Coming soon...
+[🔗 View Live Demo](https://rachet-khanal.github.io/animated-flag-threejs-demo/)
 
 ---
 
