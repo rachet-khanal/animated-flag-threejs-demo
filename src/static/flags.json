@@ -1,0 +1,14 @@
+[
+  { "id": "Australia", "name": "Australia", "file": "flags/aus.png" },
+  { "id": "India", "name": "India", "file": "flags/india.png" },
+  {
+    "id": "Nepal",
+    "name": "Nepal",
+    "file": "flags/nepal.png",
+    "alpha": "flags/nepal-mask.png"
+  },
+  { "id": "NewZealand", "name": "New Zealand", "file": "flags/nz.png" },
+  { "id": "UK", "name": "United Kingdom", "file": "flags/uk.png" },
+  { "id": "UN", "name": "United Nations", "file": "flags/un.png" },
+  { "id": "USA", "name": "United States", "file": "flags/us.png" }
+]
