@@ -75,8 +75,10 @@ Coming soon...
 │   └── fragment.glsl      # Texture and alpha handling
 ├── utils/
 │   └── sizes.js           # Responsive camera/resizing logic
-├── public/
+├── static/
 │   └── flags/             # Flag images with optional alpha maps
+├── public/
+│   └── screenshot.webp
 ├── main.js                # Entry point, sets up scene & GUI
 └── index.html
 ```
@@ -85,7 +87,7 @@ Coming soon...
 
 ## 📸 Screenshots
 
-Coming soon...
+![Animated flag demo](public/screenshot.webp)
 
 ---
 
