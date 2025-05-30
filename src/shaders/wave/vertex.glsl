@@ -4,7 +4,6 @@ uniform float uTime;
 uniform sampler2D uNoise;
 uniform float uNumBands;
 uniform float uGustMultiplier;
-uniform vec3 uLightDir;
 
 uniform bool uUsePole;
 
