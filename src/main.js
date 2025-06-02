@@ -1,10 +1,12 @@
 import * as THREE from "three"
 
+import { sizes, useResponsiveSizing } from "./utils/sizes.js"
+
 import GUI from "lil-gui"
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js"
+// import { VertexNormalsHelper } from "three/addons/helpers/VertexNormalsHelper.js"
 import { createFlagMesh } from "./components/FlagMesh.js"
 import { createPoleMesh } from "./components/PoleMesh.js"
-import { useResponsiveSizing } from "./utils/sizes.js"
 
 // Canvas
 const canvas = document.querySelector("canvas.webgl")
@@ -14,25 +16,22 @@ const scene = new THREE.Scene()
 
 // Waves
 const waveOptions = {
-  numBands: 1.0,
-  gustMultiplier: 2.0,
+  numBands: 2.0,
+  gustMultiplier: 4.0,
 }
 
 // Directional Light
 const lightOptions = {
-  lightX: 0.3,
-  lightY: 0.2,
-  lightZ: 1.0,
-  lightStrength: 0.1,
+  lightX: 1.0,
+  lightY: 1.0,
+  lightZ: 0.3,
+  lightStrength: 2.25,
 }
-const directionLight = new THREE.DirectionalLight(
-  0xffffff,
-  lightOptions.lightStrength
-)
-directionLight.position
+const pointLight = new THREE.PointLight(0xffffff, lightOptions.lightStrength)
+pointLight.position
   .set(lightOptions.lightX, lightOptions.lightY, lightOptions.lightZ)
   .normalize()
-scene.add(directionLight)
+scene.add(pointLight)
 
 // Mesh
 const { mesh: flagMesh, flagsArray } = await createFlagMesh(
@@ -50,6 +49,22 @@ scene.add(flagMesh)
 const ambientLight = new THREE.AmbientLight(0xffffff, 1.0)
 scene.add(ambientLight)
 
+/**
+ * Light Helpers
+ */
+
+// const pointLightHelper = new THREE.Mesh(
+//   new THREE.IcosahedronGeometry(0.03, 2),
+//   new THREE.MeshBasicMaterial({ side: THREE.DoubleSide })
+// )
+// pointLightHelper.material.color.setRGB(1.0, 1.0, 1.0)
+// pointLightHelper.position.set(
+//   lightOptions.lightX,
+//   lightOptions.lightY,
+//   lightOptions.lightZ
+// )
+// scene.add(pointLightHelper)
+
 // Pole mesh
 const poleOptions = {
   showPole: true,
@@ -63,8 +78,13 @@ scene.add(poleMesh)
 /**
  * Camera
  */
-const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 100)
-camera.position.set(0, 0, 1.25)
+const camera = new THREE.PerspectiveCamera(
+  75,
+  sizes.width / sizes.height,
+  0.1,
+  100
+)
+camera.position.set(0, 0, 1.75)
 scene.add(camera)
 
 /**
@@ -78,7 +98,7 @@ const renderer = new THREE.WebGLRenderer({
 /**
  * Sizes
  */
-const sizes = useResponsiveSizing(camera, renderer, canvas)
+useResponsiveSizing(camera, renderer)
 
 // Controls
 const controls = new OrbitControls(camera, canvas)
@@ -124,9 +144,9 @@ function setupGUI() {
   gui.add(lightOptions, "lightX", -3, 3, 0.01).onChange(updateLight)
   gui.add(lightOptions, "lightY", -3, 3, 0.01).onChange(updateLight)
   gui.add(lightOptions, "lightZ", -3, 3, 0.01).onChange(updateLight)
-  gui.add(lightOptions, "lightStrength", 0, 5, 0.01).onChange((val) => {
+  gui.add(lightOptions, "lightStrength", 0, 15, 0.01).onChange((val) => {
     flagMesh.material.uniforms.uLightStrength.value = val
-    directionLight.intensity = val
+    pointLight.intensity = val
   })
 
   gui
@@ -143,13 +163,15 @@ function updateLight() {
     lightOptions.lightX,
     lightOptions.lightY,
     lightOptions.lightZ
-  ).normalize()
+  )
   // Shader uniform (for flag)
   flagMesh.material.uniforms.uLightDir.value.copy(dir)
 
   // Three.js light (for pole)
-  directionLight.position.copy(dir)
-  directionLight.intensity = lightOptions.lightStrength
+  pointLight.position.copy(dir)
+  // pointLightHelper.position.copy(dir)
+
+  pointLight.intensity = lightOptions.lightStrength
 }
 
 setupGUI()

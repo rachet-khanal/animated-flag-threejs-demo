@@ -24,8 +24,8 @@ export function createFlagGeometry(width, height, segmentsX, segmentsY) {
       const b = i + segmentsX + 1
       const c = i + 1
       const d = i + segmentsX + 2
-      indices.push(a, b, c)
-      indices.push(c, b, d)
+      indices.push(a, c, b)
+      indices.push(c, d, b)
     }
   }
   geometry.setAttribute(

@@ -9,6 +9,7 @@ uniform bool uUsePole;
 
 varying vec2 vUv;
 varying vec3 vPosition;
+varying vec3 vNormal;
 
 void main() {
     vUv = uv;
@@ -43,9 +44,13 @@ void main() {
         float falloff = smoothstep(0.01, 0.3, vUv.x); 
         displacement *= falloff;
     }
-
     pos.z += displacement;
-    vPosition = pos;
-
     gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+
+
+
+    vPosition = pos;
+    vec4 modelNormal = modelMatrix * vec4(normal, 0.0);
+    vNormal = modelNormal.xyz;
+
 }

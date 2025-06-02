@@ -1,11 +1,11 @@
 import * as THREE from "three"
 
-export function useResponsiveSizing(camera, renderer, canvas) {
-  const sizes = {
-    width: window.innerWidth,
-    height: window.innerHeight,
-  }
+export const sizes = {
+  width: window.innerWidth,
+  height: window.innerHeight,
+}
 
+export function useResponsiveSizing(camera, renderer) {
   function onResize() {
     sizes.width = window.innerWidth
     sizes.height = window.innerHeight
